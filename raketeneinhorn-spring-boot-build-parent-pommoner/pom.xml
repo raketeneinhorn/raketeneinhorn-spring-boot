@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.raketeneinhorn.spring.boot</groupId>
+    <artifactId>raketeneinhorn-spring-boot-build-parent-pommoner</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <properties>
+        <maven.install.skip>true</maven.install.skip>
+        <maven.deploy.skip>true</maven.deploy.skip>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <maven-resources-plugin.version>3.2.0</maven-resources-plugin.version>
+        <exec-maven-plugin.version>3.0.0</exec-maven-plugin.version>
+        <xml-maven-plugin.version>1.0.2</xml-maven-plugin.version>
+        <saxon.version>8.7</saxon.version>
+
+        <pommon.base.pom>../raketeneinhorn-spring-boot-starter-parent</pommon.base.pom>
+        <pommon.base.artifactId>raketeneinhorn-spring-boot-starter-parent</pommon.base.artifactId>
+
+        <pommon.magic-circle.directory>${project.build.directory}/magic-circle</pommon.magic-circle.directory>
+
+        <pommon.pommoner.directory>${project.build.resources[0].directory}/pommoner</pommon.pommoner.directory>
+
+        <pommon.target.groupId>com.raketeneinhorn.spring.boot</pommon.target.groupId>
+        <pommon.target.artifactId>raketeneinhorn-spring-boot-build-parent</pommon.target.artifactId>
+        <pommon.target.directory>${project.build.directory}/${pommon.target.artifactId}</pommon.target.directory>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>${maven-resources-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>copy-pommon-base-pom</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${pommon.magic-circle.directory}</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.basedir}/${pommon.base.pom}</directory>
+                                    <includes>
+                                        <include>pom.xml</include>
+                                    </includes>
+                                </resource>
+                                <resource>
+                                    <directory>${pommon.pommoner.directory}</directory>
+                                    <includes>
+                                        <include>double-headed-demon.xml</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>${exec-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <workingDirectory>${project.basedir}/..</workingDirectory>
+                            <executable>mvn</executable>
+                            <arguments>
+                                <argument>-pl</argument>
+                                <argument>${pommon.base.artifactId}</argument>
+                                <argument>help:effective-pom</argument>
+                                <argument>-Doutput=${pommon.magic-circle.directory}/effective-pom.xml</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>xml-maven-plugin</artifactId>
+                <version>${xml-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>transform</goal>
+                        </goals>
+                        <configuration>
+                            <basedir>${pommon.magic-circle.directory}</basedir>
+                            <transformationSets>
+                                <transformationSet>
+                                    <dir>${pommon.magic-circle.directory}</dir>
+                                    <includes>
+                                        <include>double-headed-demon.xml</include>
+                                    </includes>
+                                    <xincludeAware>true</xincludeAware>
+                                    <stylesheet>${pommon.pommoner.directory}/${pommon.target.artifactId}-spell.xsl</stylesheet>
+                                    <parameters>
+                                        <parameter>
+                                            <name>pommon.base.artifactId</name>
+                                            <value>${pommon.base.artifactId}</value>
+                                        </parameter>
+                                        <parameter>
+                                            <name>pommon.target.groupId</name>
+                                            <value>${pommon.target.groupId}</value>
+                                        </parameter>
+                                        <parameter>
+                                            <name>pommon.target.artifactId</name>
+                                            <value>${pommon.target.artifactId}</value>
+                                        </parameter>
+                                    </parameters>
+                                    <outputDir>${pommon.target.directory}</outputDir>
+                                    <fileMappers>
+                                        <fileMapper implementation="org.codehaus.plexus.components.io.filemappers.RegExpFileMapper">
+                                            <pattern>double-headed-demon.xml</pattern>
+                                            <replacement>pom.xml</replacement>
+                                        </fileMapper>
+                                    </fileMappers>
+                                </transformationSet>
+                            </transformationSets>
+                        </configuration>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>net.sf.saxon</groupId>
+                        <artifactId>saxon</artifactId>
+                        <version>${saxon.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

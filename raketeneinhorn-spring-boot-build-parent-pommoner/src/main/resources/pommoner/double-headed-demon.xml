@@ -1,0 +1,8 @@
+<pommon:double-headed-demon xmlns:pommon="https://raketeneinhorn.com/maven/pommon" xmlns:xi="http://www.w3.org/2001/XInclude">
+    <pommon:raw>
+        <xi:include href="./pom.xml"/>
+    </pommon:raw>
+    <pommon:effective>
+        <xi:include href="./effective-pom.xml"/>
+    </pommon:effective>
+</pommon:double-headed-demon>

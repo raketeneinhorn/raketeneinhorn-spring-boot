@@ -1,0 +1,30 @@
+# raketeneinhorn-spring-boot
+
+A collection of Maven artifacts that allow to efficiently manage common aspects of a Spring Boot ecosystem.
+
+## raketeneinhorn-spring-boot-dependencies
+
+Additional dependency management for artifacts that are not directly part of Spring Boot (e.g. Spring Cloud).
+
+## raketeneinhorn-spring-boot-starter-parent
+
+An extension of the well known spring boot starter parent to manage the following aspects for all projects derived
+from the parent POM artifacts created in this project:
+
+- Java 17
+- Dependencies Management  
+  Import the `raketeneinhorn-spring-boot-dependencies` using the BOM mechanism.
+- Organization & developer information
+
+## raketeneinhorn-spring-boot-build-parent-pommoner
+
+A pommoner is a simple project to summon a POM (hence the name). This artifact is used to pommon the artifact
+`raketeneinhorn-spring-boot-build-parent`.
+
+### raketeneinhorn-spring-boot-build-parent
+
+An artifact stripped from all the Spring Boot specifics contained in the `raketeneinhorn-spring-boot-starter-parent`.
+
+It is meant to provide a parent to be used in various projects which can later be easilye reintegrated in projects
+derived from `raketeneinhorn-spring-boot-starter-parent`. The main advantage here is, that the various dependency
+versions are automatically synced. 
