@@ -84,6 +84,34 @@
                             </arguments>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>pommon-install</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <workingDirectory>${pommon.target.directory}</workingDirectory>
+                            <executable>mvn</executable>
+                            <arguments>
+                                <argument>install</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>pommon-deploy</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <workingDirectory>${pommon.target.directory}</workingDirectory>
+                            <executable>mvn</executable>
+                            <arguments>
+                                <argument>deploy</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
             <plugin>
