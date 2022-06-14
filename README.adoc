@@ -28,4 +28,8 @@ An artifact stripped from all the Spring Boot specifics contained in the `rakete
 
 It is meant to provide a parent to be used in various projects which can later be easilye reintegrated in projects
 derived from `raketeneinhorn-spring-boot-starter-parent`. The main advantage here is, that the various dependency
-versions are automatically synced. 
+versions are automatically synced.
+
+== License
+
+Raketeneinhorn Spring Boot is Open Source software released under the https://www.apache.org/licenses/LICENSE-2.0.html[Apache 2.0 license].
