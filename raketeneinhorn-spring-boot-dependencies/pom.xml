@@ -9,7 +9,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <spring-cloud-dependencies.version>2023.0.0</spring-cloud-dependencies.version>
+        <spring-cloud-dependencies.version>2023.0.1</spring-cloud-dependencies.version>
     </properties>
 
     <dependencyManagement>
